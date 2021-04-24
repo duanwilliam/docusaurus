@@ -28,7 +28,11 @@ function ShowcaseCheckbox({
         onChange={onChange}
         checked={checked}
       />
-      <label htmlFor={id}>{label}</label>
+      <label
+        htmlFor={id}
+        className={clsx('badge badge--primary', styles.filterLabel)}>
+        {label}
+      </label>
     </div>
   );
 }

@@ -6,7 +6,6 @@
  */
 
 .checkboxContainer {
-  display: inline;
   padding: 5px;
   user-select: none;
 }
@@ -16,6 +15,23 @@
 }
 
 .checkboxContainer label {
-  margin-left: 0.5rem;
-  text-overflow: ellipsis;
+  opacity: 0.35;
+  white-space: nowrap;
+  }
+
+.checkboxContainer input {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkboxContainer input:focus ~ label {
+  outline: 1px auto -webkit-focus-ring-color;
+}
+
+.checkboxContainer input:checked ~ label {
+  opacity: 1;
+}
+
+.filterLabel {
+  border-radius: 100vmax;
 }

@@ -6,10 +6,8 @@
  */
 
 import React, {useState, useMemo, useCallback, useEffect} from 'react';
-
 import Layout from '@theme/Layout';
 import ShowcaseCheckbox from '@site/src/components/showcase/ShowcaseCheckbox';
-import ShowcaseSelect from '@site/src/components/showcase/ShowcaseSelect';
 import ShowcaseCard from '@site/src/components/showcase/ShowcaseCard';
 import clsx from 'clsx';
 
@@ -17,6 +15,7 @@ import {useHistory, useLocation} from '@docusaurus/router';
 
 import {toggleListItem} from '../../utils/jsUtils';
 import {SortedUsers, Tags, TagList} from '../../data/users';
+import ShowcaseToggle from '../../components/showcase/ShowcaseToggle';
 
 const TITLE = 'Docusaurus Site Showcase';
 const DESCRIPTION = 'List of websites people are building with Docusaurus';
@@ -110,39 +109,37 @@ function ShowcaseFilters({selectedTags, toggleTag, operator, setOperator}) {
   return (
     <div className="margin-top--l margin-bottom--md container">
       <div className="row">
+        <h4 className="col col--1">Filters</h4>
+        <div className="col col--1">
+          <ShowcaseToggle
+            onChange={(e) => setOperator(e.target.checked ? 'OR' : 'AND')}
+            checked={true}
+          />
+        </div>
+      </div>
+      <div className="row">
         {TagList.map((tag) => {
           const {label, description, icon} = Tags[tag];
           return (
-            <div key={tag} className="col col--2">
-              <ShowcaseCheckbox
-                // TODO add a proper tooltip
-                title={`${label}: ${description}`}
-                aria-label={`${label}: ${description}`}
-                name={tag}
-                label={
-                  icon ? (
-                    <>
-                      {icon} {label}
-                    </>
-                  ) : (
-                    label
-                  )
-                }
-                onChange={() => toggleTag(tag)}
-                checked={selectedTags.includes(tag)}
-              />
-            </div>
+            <ShowcaseCheckbox
+              // TODO add a proper tooltip
+              title={`${label}: ${description}`}
+              aria-label={`${label}: ${description}`}
+              name={tag}
+              label={
+                icon ? (
+                  <>
+                    {icon} {label}
+                  </>
+                ) : (
+                  label
+                )
+              }
+              onChange={() => toggleTag(tag)}
+              checked={selectedTags.includes(tag)}
+            />
           );
         })}
-        <div className="col col--2">
-          <ShowcaseSelect
-            name="operator"
-            value={operator}
-            onChange={(e) => setOperator(e.target.value)}>
-            <option value="OR">OR</option>
-            <option value="AND">AND</option>
-          </ShowcaseSelect>
-        </div>
       </div>
     </div>
   );
@@ -152,7 +149,7 @@ function ShowcaseCards({filteredUsers}) {
   return (
     <section className="container margin-top--lg">
       <h2>
-        {filteredUsers.length} site{filteredUsers.length > 1 ? 's' : ''}
+        {`${filteredUsers.length} site${filteredUsers.length != 1 ? 's' : ''}`}
       </h2>
       <div className="margin-top--lg">
         {filteredUsers.length > 0 ? (
