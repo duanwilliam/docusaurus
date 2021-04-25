@@ -25,7 +25,7 @@
 }
 
 .checkboxContainer input:focus ~ label {
-  outline: 1px auto -webkit-focus-ring-color;
+  border: 1px solid var(--ifm-font-color-base);
 }
 
 .checkboxContainer input:checked ~ label {
