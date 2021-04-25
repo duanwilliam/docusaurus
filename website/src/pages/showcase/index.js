@@ -17,6 +17,8 @@ import {toggleListItem} from '../../utils/jsUtils';
 import {SortedUsers, Tags, TagList} from '../../data/users';
 import ShowcaseToggle from '../../components/showcase/ShowcaseToggle';
 
+import styles from './styles.module.css';
+
 const TITLE = 'Docusaurus Site Showcase';
 const DESCRIPTION = 'List of websites people are building with Docusaurus';
 const EDIT_URL =
@@ -108,16 +110,12 @@ function ShowcaseHeader() {
 function ShowcaseFilters({selectedTags, toggleTag, operator, setOperator}) {
   return (
     <div className="margin-top--l margin-bottom--md container">
-      <div className="row">
-        <div className="col col--1">
-          <h4>Filters</h4>
-        </div>
-        <div className="col col--1">
-          <ShowcaseToggle
-            onChange={(e) => setOperator(e.target.checked ? 'OR' : 'AND')}
-            checked={true}
-          />
-        </div>
+      <div className={clsx('row', styles.filtersHeadingRow)}>
+        <h4>Filters</h4>
+        <ShowcaseToggle
+          onChange={(e) => setOperator(e.target.checked ? 'OR' : 'AND')}
+          checked={true}
+        />
       </div>
       <div className="row">
         {TagList.map((tag) => {
