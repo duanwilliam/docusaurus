@@ -25,7 +25,13 @@
 }
 
 .checkboxContainer input:focus ~ label {
-  border: 1px solid var(--ifm-font-color-base);
+  border-color: var(--ifm-font-color-base);
+}
+.checkboxContainer input:focus:not(:focus-visible) ~ label {
+  border-color: var(--ifm-badge-border-color);
+}
+.checkboxContainer input:focus-visible ~ label {
+  border-color: var(--ifm-font-color-base);
 }
 
 .checkboxContainer input:checked ~ label {
