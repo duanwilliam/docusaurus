@@ -40,52 +40,79 @@ function ShowcaseCardTagIcons({tags}) {
   ));
 }
 
-const ShowcaseCard = memo(function ({user}) {
+function ConditionalLink({
+  condition,
+  href,
+  defaultTag = `div`,
+  linkProps = {},
+  defaultProps = {},
+  className,
+  children,
+  ...sharedProps
+}) {
+  const [Tag, {className: tagClassName, ...tagProps}] = condition
+    ? [`a`, {...linkProps, href: href}]
+    : [`${defaultTag}`, defaultProps];
+  const props = {
+    ...sharedProps,
+    ...tagProps,
+  };
   return (
-    <div key={user.title} className="col col--4 margin-bottom--lg">
+    <Tag className={clsx(className, tagClassName && tagClassName)} {...props}>
+      {children}
+    </Tag>
+  );
+}
+
+const ShowcaseCard = memo(function ({
+  user: {title, description, website, preview, source, tags},
+}) {
+  const footerLinks = [{href: source, label: 'Source'}];
+  return (
+    <div key={title} className="col col--4 margin-bottom--lg">
       <div className={clsx('card', styles.showcaseCard)}>
         <div className={clsx('card__image', styles.showcaseCardImage)}>
-          <Image img={user.preview} alt={user.title} />
+          <Image img={preview} alt={title} />
         </div>
         <div className="card__body">
           <div className="avatar">
             <div className="avatar__intro margin-left--none">
               <div className={styles.titleIconsRow}>
-                <div className={styles.titleIconsRowTitle}>
-                  <h4 className="avatar__name">{user.title}</h4>
-                </div>
+                <ConditionalLink
+                  className={styles.titleIconsRowTitle}
+                  condition={website}
+                  href={website}
+                  linkProps={{
+                    className: styles.titleLink,
+                    target: '_blank',
+                    rel: 'noreferrer noopener',
+                  }}>
+                  <h4 className="avatar__name">{title}</h4>
+                </ConditionalLink>
                 <div className={styles.titleIconsRowIcons}>
-                  <ShowcaseCardTagIcons tags={user.tags} />
+                  <ShowcaseCardTagIcons tags={tags} />
                 </div>
               </div>
-              <small className="avatar__subtitle">{user.description}</small>
+              <small className="avatar__subtitle">{description}</small>
             </div>
           </div>
         </div>
-        {(user.website || user.source) && (
-          <div className="card__footer">
-            <div className="button-group button-group--block">
-              {user.website && (
-                <a
-                  className="button button--small button--secondary button--block"
-                  href={user.website}
-                  target="_blank"
-                  rel="noreferrer noopener">
-                  Website
-                </a>
-              )}
-              {user.source && (
-                <a
-                  className="button button--small button--secondary button--block"
-                  href={user.source}
-                  target="_blank"
-                  rel="noreferrer noopener">
-                  Source
-                </a>
-              )}
-            </div>
+        <div className="card__footer">
+          <div className="button-group button-group--block">
+            {footerLinks.map(({href, label}) => (
+              <a
+                className={clsx(
+                  'button button--small button--secondary button--block',
+                  {disabled: !href},
+                )}
+                href={href}
+                target="_blank"
+                rel="noreferrer noopener">
+                {label}
+              </a>
+            ))}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
