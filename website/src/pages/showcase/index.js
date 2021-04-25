@@ -109,7 +109,9 @@ function ShowcaseFilters({selectedTags, toggleTag, operator, setOperator}) {
   return (
     <div className="margin-top--l margin-bottom--md container">
       <div className="row">
-        <h4 className="col col--1">Filters</h4>
+        <div className="col col--1">
+          <h4>Filters</h4>
+        </div>
         <div className="col col--1">
           <ShowcaseToggle
             onChange={(e) => setOperator(e.target.checked ? 'OR' : 'AND')}
@@ -123,6 +125,7 @@ function ShowcaseFilters({selectedTags, toggleTag, operator, setOperator}) {
           return (
             <ShowcaseCheckbox
               // TODO add a proper tooltip
+              key={tag}
               title={`${label}: ${description}`}
               aria-label={`${label}: ${description}`}
               name={tag}

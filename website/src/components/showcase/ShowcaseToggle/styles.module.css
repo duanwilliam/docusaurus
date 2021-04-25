@@ -45,6 +45,7 @@
 }
 
 .react-toggle-track {
+  position: relative;
   width: 50px;
   height: 24px;
   border-radius: 30px;
@@ -59,7 +60,7 @@
   top: 0px;
   bottom: 0px;
   margin: auto 0;
-  left: 10px; /* 8px; */
+  left: 8px;
   opacity: 0;
   transition: opacity 0.25s ease;
 }
