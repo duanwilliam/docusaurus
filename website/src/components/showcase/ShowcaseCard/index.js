@@ -71,9 +71,16 @@ const ShowcaseCard = memo(function ({
   return (
     <div key={title} className="col col--4 margin-bottom--lg">
       <div className={clsx('card', styles.showcaseCard)}>
-        <div className={clsx('card__image', styles.showcaseCardImage)}>
+        <ConditionalLink
+          className={clsx('card__image', styles.showcaseCardImage)}
+          condition={website}
+          href={website}
+          linkProps={{
+            target: '_blank',
+            rel: 'noreferrer noopener',
+          }}>
           <Image img={preview} alt={title} />
-        </div>
+        </ConditionalLink>
         <div className="card__body">
           <div className="avatar">
             <div className="avatar__intro margin-left--none">
